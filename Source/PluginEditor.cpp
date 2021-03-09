@@ -18,9 +18,11 @@ ATKSD1AudioProcessorEditor::ATKSD1AudioProcessorEditor(ATKSD1AudioProcessor& p,
   : AudioProcessorEditor(&p)
   , processor(p)
   , paramState(paramState)
-  , drive(paramState, "drive", "Drive")
-  , tone(paramState, "tone", "Tone")
-  , level(paramState, "level", "Level")
+  , bigKnob(juce::ImageFileFormat::loadFrom(BinaryData::BigKnob_png, BinaryData::BigKnob_pngSize), 120, 120, 131)
+  , smallKnob(juce::ImageFileFormat::loadFrom(BinaryData::SmallKnob_png, BinaryData::SmallKnob_pngSize), 100, 100, 131)
+  , drive(paramState, "drive", "Drive", &bigKnob)
+  , tone(paramState, "tone", "Tone", &smallKnob)
+  , level(paramState, "level", "Level", &bigKnob)
 
 {
   addAndMakeVisible(drive);
@@ -42,7 +44,7 @@ void ATKSD1AudioProcessorEditor::paint(Graphics& g)
 
 void ATKSD1AudioProcessorEditor::resized()
 {
-  drive.setBoundsRelative(0, 1. / 4, 1. / 6, 3. / 4);
-  tone.setBoundsRelative(1. / 6, 1. / 4, 3. / 6, 3. / 4);
-  level.setBoundsRelative(4. / 6, 1. / 4, 1. / 6, 3. / 4);
+  drive.setBounds(250, 20, 120, 120);
+  tone.setBounds(150, 70, 100, 100);
+  level.setBounds(30, 20, 120, 120);
 }

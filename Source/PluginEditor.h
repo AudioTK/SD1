@@ -33,6 +33,9 @@ private:
   // access the processor object that created it.
   ATKSD1AudioProcessor& processor;
   AudioProcessorValueTreeState& paramState;
+  
+  ATK::juce::ImageLookAndFeel bigKnob;
+  ATK::juce::ImageLookAndFeel smallKnob;
 
   ATK::juce::SliderComponent drive;
   ATK::juce::SliderComponent tone;
