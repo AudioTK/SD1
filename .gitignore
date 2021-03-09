@@ -1,0 +1,7 @@
+Builds
+gyrator
+*.log
+*.exe
+*.dat
+*.png
+*.dmg

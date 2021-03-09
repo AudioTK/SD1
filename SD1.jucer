@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="KHQl4f" name="SD1" displaySplashScreen="1" reportAppUsage="1"
+              splashScreenColour="Dark" projectType="audioplug" version="3.0"
+              bundleIdentifier="com.MatthieuBrucher.ATKSD1" includeBinaryInAppConfig="1"
+              buildVST="0" buildVST3="1" buildAU="0" buildAUv3="1" buildRTAS="0"
+              buildAAX="0" buildStandalone="1" enableIAA="0" pluginName="SD1"
+              pluginDesc="" pluginManufacturer="MatthieuBrucher" pluginManufacturerCode="MatB"
+              pluginCode="Jh5n" pluginChannelConfigs="{1,1}" pluginIsSynth="0"
+              pluginWantsMidiIn="0" pluginProducesMidiOut="0" pluginIsMidiEffectPlugin="0"
+              pluginEditorRequiresKeys="0" pluginAUExportPrefix="ATKSD1" pluginRTASCategory=""
+              aaxIdentifier="com.MatthieuBrucher.SD1" pluginAAXCategory="0"
+              companyName="Matthieu Brucher" companyWebsite="http://www.audio-tk.com/"
+              pluginFormats="buildAUv3,buildStandalone,buildVST3" cppLanguageStandard="latest"
+              jucerFormatVersion="1" defines="JUCE_VST3_CAN_REPLACE_VST2=0">
+  <MAINGROUP id="H9V4ut" name="SD1">
+    <GROUP id="{65FEA80A-F647-1916-F1CE-08CA719AE1BE}" name="Source">
+      <FILE id="LX9XxX" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="lieT9v" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="gObIkL" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="Js7KLE" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+    <FILE id="MkGvNn" name="DryWetFilter.cpp" compile="1" resource="0"
+          file="ATKJUCEComponents/Tools/DryWetFilter.cpp"/>
+    <FILE id="KZRd9c" name="DryWetFilter.h" compile="0" resource="0" file="ATKJUCEComponents/Tools/DryWetFilter.h"/>
+    <FILE id="lTedh1" name="LookAndFeel.cpp" compile="1" resource="0" file="ATKJUCEComponents/JUCE/LookAndFeel.cpp"/>
+    <FILE id="jfbPpD" name="LookAndFeel.h" compile="0" resource="0" file="ATKJUCEComponents/JUCE/LookAndFeel.h"/>
+    <FILE id="gItqdw" name="ToneStackFilter.cpp" compile="1" resource="0"
+          file="ATKJUCEComponents/EQ/ToneStackFilter.cpp"/>
+    <FILE id="NfgsTu" name="ToneStackFilter.h" compile="0" resource="0"
+          file="ATKJUCEComponents/EQ/ToneStackFilter.h"/>
+    <FILE id="CKlsqE" name="VolumeFilter.cpp" compile="1" resource="0"
+          file="ATKJUCEComponents/Tools/VolumeFilter.cpp"/>
+    <FILE id="YcgZiD" name="VolumeFilter.h" compile="0" resource="0" file="ATKJUCEComponents/Tools/VolumeFilter.h"/>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX" vst3Folder="../../SDKs/VST3_SDK"
+               extraDefs="HAS_STD_ALIGN" keepCustomXcodeSchemes="1" aaxFolder="../../SDKs/AAX_SDK_2p2p2"
+               xcodeValidArchs="arm64,arm64e,x86_64">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="ATKSD1"
+                       headerPath="../../../../Plugins/SD1&#10;../../../../AudioTK&#10;../../../../AudioTK/3rdParty/gsl/include&#10;../../../../AudioTK/3rdParty/eigen&#10;../../../../../local/boost_1_75_0&#10;../../../../AudioTK-Modeling"
+                       defines="ATK_NO_FFT" osxSDK="11.1 SDK"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="ATKSD1"
+                       headerPath="../../../../Plugins/SD1&#10;../../../../AudioTK&#10;../../../../AudioTK/3rdParty/gsl/include&#10;../../../../AudioTK/3rdParty/eigen&#10;../../../../../local/boost_1_75_0&#10;../../../../AudioTK-Modeling"
+                       defines="ATK_NO_FFT" osxSDK="11.1 SDK" codeSigningIdentity="Brucher Matthieu"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../JUCE/modules"/>
+        <MODULEPATH id="atk_core" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_utility" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_preamplifier" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_eq" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_tools" path="../../AudioTK/modules/JUCE"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" defines="ATK_NO_FFT" headerPath="C:\Dev\ATK-SD1&#10;C:\Dev\AudioTK&#10;C:\Dev\AudioTK\3rdParty\gsl\include&#10;C:\Dev\AudioTK\3rdParty\eigen&#10;C:\Dev\boost_1_75_0&#10;C:\Dev\ATK-Modelling&#10;"/>
+        <CONFIGURATION isDebug="0" name="Release" defines="ATK_NO_FFT" headerPath="C:\Dev\ATK-SD1&#10;C:\Dev\AudioTK&#10;C:\Dev\AudioTK\3rdParty\gsl\include&#10;C:\Dev\AudioTK\3rdParty\eigen&#10;C:\Dev\boost_1_75_0&#10;C:\Dev\ATK-Modelling&#10;"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_plugin_client"/>
+        <MODULEPATH id="juce_audio_formats"/>
+        <MODULEPATH id="juce_audio_devices"/>
+        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="atk_core" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_utility" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_preamplifier" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_eq" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_tools" path="../../AudioTK/modules/JUCE"/>
+      </MODULEPATHS>
+    </VS2019>
+    <VS2019 targetFolder="Builds/VisualStudio2019_32">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" defines="ATK_NO_FFT" headerPath="C:\Dev\ATK-SD1&#10;C:\Dev\AudioTK&#10;C:\Dev\AudioTK\3rdParty\gsl\include&#10;C:\Dev\AudioTK\3rdParty\eigen&#10;C:\Dev\boost_1_75_0&#10;C:\Dev\ATK-Modelling&#10;"/>
+        <CONFIGURATION isDebug="0" name="Release" defines="ATK_NO_FFT" headerPath="C:\Dev\ATK-SD1&#10;C:\Dev\AudioTK&#10;C:\Dev\AudioTK\3rdParty\gsl\include&#10;C:\Dev\AudioTK\3rdParty\eigen&#10;C:\Dev\boost_1_75_0&#10;C:\Dev\ATK-Modelling&#10;"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_plugin_client"/>
+        <MODULEPATH id="juce_audio_formats"/>
+        <MODULEPATH id="juce_audio_devices"/>
+        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="atk_core" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_utility" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_preamplifier" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_eq" path="../../AudioTK/modules/JUCE"/>
+        <MODULEPATH id="atk_tools" path="../../AudioTK/modules/JUCE"/>
+      </MODULEPATHS>
+    </VS2019>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="atk_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="atk_eq" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="atk_preamplifier" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="atk_tools" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="atk_utility" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
+  <LIVE_SETTINGS>
+    <OSX/>
+  </LIVE_SETTINGS>
+</JUCERPROJECT>

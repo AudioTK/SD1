@@ -1,0 +1,18 @@
+SD1 changelog
+http://www.audio-tk.com
+
+09/03/21 - 3.0
+  - built against ATK 3.3.0
+  - rebuild against JUCE 6
+03/03/17 - v2.0.1 bug fix release
+  - built against ATK 1.4.1
+  - AU fixes
+28/03/16 - v2.0.0 bug fix release
+  - built against ATK 1.2.0
+  - better modeling of the circuit
+  - speed optimization
+29/06/14 - v1.0.1 bug fix release
+  - built against ATK 0.3.2
+  - fixing 32bits filter issues
+24/06/14 - v1.0.0 initial release
+  - built against ATK 0.3.0
