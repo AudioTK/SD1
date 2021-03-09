@@ -23,18 +23,12 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="Js7KLE" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
-    <FILE id="MkGvNn" name="DryWetFilter.cpp" compile="1" resource="0"
-          file="ATKJUCEComponents/Tools/DryWetFilter.cpp"/>
-    <FILE id="KZRd9c" name="DryWetFilter.h" compile="0" resource="0" file="ATKJUCEComponents/Tools/DryWetFilter.h"/>
-    <FILE id="lTedh1" name="LookAndFeel.cpp" compile="1" resource="0" file="ATKJUCEComponents/JUCE/LookAndFeel.cpp"/>
-    <FILE id="jfbPpD" name="LookAndFeel.h" compile="0" resource="0" file="ATKJUCEComponents/JUCE/LookAndFeel.h"/>
-    <FILE id="gItqdw" name="ToneStackFilter.cpp" compile="1" resource="0"
-          file="ATKJUCEComponents/EQ/ToneStackFilter.cpp"/>
-    <FILE id="NfgsTu" name="ToneStackFilter.h" compile="0" resource="0"
-          file="ATKJUCEComponents/EQ/ToneStackFilter.h"/>
-    <FILE id="CKlsqE" name="VolumeFilter.cpp" compile="1" resource="0"
-          file="ATKJUCEComponents/Tools/VolumeFilter.cpp"/>
-    <FILE id="YcgZiD" name="VolumeFilter.h" compile="0" resource="0" file="ATKJUCEComponents/Tools/VolumeFilter.h"/>
+    <FILE id="L7AlOZ" name="ImageLookAndFeel.cpp" compile="1" resource="0"
+          file="ATKJUCEComponents/JUCE/ImageLookAndFeel.cpp"/>
+    <FILE id="qC08Rs" name="ImageLookAndFeel.h" compile="0" resource="0"
+          file="ATKJUCEComponents/JUCE/ImageLookAndFeel.h"/>
+    <FILE id="Vb6RWm" name="Slider.cpp" compile="1" resource="0" file="ATKJUCEComponents/JUCE/Slider.cpp"/>
+    <FILE id="XULtU0" name="Slider.h" compile="0" resource="0" file="ATKJUCEComponents/JUCE/Slider.h"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vst3Folder="../../SDKs/VST3_SDK"
