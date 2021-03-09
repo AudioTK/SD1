@@ -13,9 +13,7 @@
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
 
-#include <ATKJUCEComponents/EQ/ToneStackFilter.h>
-#include <ATKJUCEComponents/Tools/DryWetFilter.h>
-#include <ATKJUCEComponents/Tools/VolumeFilter.h>
+#include <ATKJUCEComponents/JUCE/Slider.h>
 
 //==============================================================================
 /**
@@ -36,10 +34,7 @@ private:
   ATKSD1AudioProcessor& processor;
   AudioProcessorValueTreeState& paramState;
 
-  ATK::juce::VolumeFilterComponent gain;
-  ATK::juce::ToneStackFilterComponent stack;
-  ATK::juce::VolumeFilterComponent volume;
-  ATK::juce::DryWetFilterComponent drywet;
-
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ATKSD1AudioProcessorEditor)
+  ATK::juce::SliderComponent drive;
+  ATK::juce::SliderComponent tone;
+  ATK::juce::SliderComponent level;
 };

@@ -18,6 +18,7 @@
 #include <ATK/EQ/ButterworthFilter.h>
 #include <ATK/EQ/ChamberlinFilter.h>
 #include <ATK/EQ/IIRFilter.h>
+#include <ATK/EQ/PedalToneStackFilter.h>
 #include <ATK/Tools/DecimationFilter.h>
 #include <ATK/Tools/OversamplingFilter.h>
 #include <ATK/Tools/VolumeFilter.h>
@@ -28,6 +29,8 @@
 
 class ATKSD1AudioProcessor: public AudioProcessor
 {
+  static constexpr int OVERSAMPLING = 8;
+
 public:
   //==============================================================================
   ATKSD1AudioProcessor();

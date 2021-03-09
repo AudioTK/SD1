@@ -49,8 +49,8 @@
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_atk_core                      1
+#define JUCE_MODULE_AVAILABLE_atk_distortion                1
 #define JUCE_MODULE_AVAILABLE_atk_eq                        1
-#define JUCE_MODULE_AVAILABLE_atk_preamplifier              1
 #define JUCE_MODULE_AVAILABLE_atk_tools                     1
 #define JUCE_MODULE_AVAILABLE_atk_utility                   1
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics             1

@@ -15,8 +15,8 @@
 #include "AppConfig.h"
 
 #include <atk_core/atk_core.h>
+#include <atk_distortion/atk_distortion.h>
 #include <atk_eq/atk_eq.h>
-#include <atk_preamplifier/atk_preamplifier.h>
 #include <atk_tools/atk_tools.h>
 #include <atk_utility/atk_utility.h>
 #include <juce_audio_basics/juce_audio_basics.h>

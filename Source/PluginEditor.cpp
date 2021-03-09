@@ -17,16 +17,14 @@ ATKSD1AudioProcessorEditor::ATKSD1AudioProcessorEditor(ATKSD1AudioProcessor& p,
   : AudioProcessorEditor(&p)
   , processor(p)
   , paramState(paramState)
-  , gain(paramState, "gain", "Gain")
-  , stack(paramState, "bass", "medium", "high")
-  , volume(paramState, "volume", "Volume")
-  , drywet(paramState, "drywet")
+  , drive(paramState, "drive", "Drive")
+  , tone(paramState, "tone", "Tone")
+  , level(paramState, "level", "Level")
 
 {
-  addAndMakeVisible(gain);
-  addAndMakeVisible(stack);
-  addAndMakeVisible(volume);
-  addAndMakeVisible(drywet);
+  addAndMakeVisible(drive);
+  addAndMakeVisible(tone);
+  addAndMakeVisible(level);
 
   // Make sure that before the constructor has finished, you've set the
   // editor's size to whatever you need it to be.
@@ -48,8 +46,7 @@ void ATKSD1AudioProcessorEditor::paint(Graphics& g)
 
 void ATKSD1AudioProcessorEditor::resized()
 {
-  gain.setBoundsRelative(0, 1. / 4, 1. / 6, 3. / 4);
-  stack.setBoundsRelative(1. / 6, 1. / 4, 3. / 6, 3. / 4);
-  volume.setBoundsRelative(4. / 6, 1. / 4, 1. / 6, 3. / 4);
-  drywet.setBoundsRelative(5. / 6, 1. / 4, 1. / 6, 3. / 4);
+  drive.setBoundsRelative(0, 1. / 4, 1. / 6, 3. / 4);
+  tone.setBoundsRelative(1. / 6, 1. / 4, 3. / 6, 3. / 4);
+  level.setBoundsRelative(4. / 6, 1. / 4, 1. / 6, 3. / 4);
 }

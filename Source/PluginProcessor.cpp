@@ -26,16 +26,13 @@ ATKSD1AudioProcessor::ATKSD1AudioProcessor()
   ,
 #endif
   inFilter(nullptr, 1, 0, false)
-  , overdriveFilter(ATK::Triode2Filter<double,
-        ATK::DempwolfTriodeFunction<double>>::build_standard_filter(100e3, 1e6, 1e6, 820, 300, 22e-9, 250e-6))
-  , toneFilter(ATK::ToneStackCoefficients<double>::buildBassmanStack())
   , outFilter(nullptr, 1, 0, false)
   , parameters(*this,
         nullptr,
         juce::Identifier("ATKSD1"),
-        {std::make_unique<juce::AudioParameterFloat>("drive", "Drive", NormalisableRange<float>(0, 100), 0, "%"),
-            std::make_unique<juce::AudioParameterFloat>("tone", "Tone", NormalisableRange<float>(-100, 100), 0, "%"),
-            std::make_unique<juce::AudioParameterFloat>("level", "Level", NormalisableRange<float>(100, 100), 0, "%")})
+        {std::make_unique<juce::AudioParameterFloat>("drive", "Drive", NormalisableRange<float>(0, 100), 0, " %"),
+            std::make_unique<juce::AudioParameterFloat>("tone", "Tone", NormalisableRange<float>(-100, 100), 0, " %"),
+            std::make_unique<juce::AudioParameterFloat>("level", "Level", NormalisableRange<float>(0, 100), 100, " %")})
 {
   oversamplingFilter.set_input_port(0, &inFilter, 0);
   overdriveFilter.set_input_port(0, &oversamplingFilter, 0);
@@ -182,7 +179,7 @@ void ATKSD1AudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& m
   if(*parameters.getRawParameterValue("level") != old_level)
   {
     old_level = *parameters.getRawParameterValue("level");
-    volumeFilter.set_volume(old_level / 150.)
+    volumeFilter.set_volume(old_level / 150.);
   }
 
   const int totalNumInputChannels = getTotalNumInputChannels();
@@ -213,24 +210,18 @@ void ATKSD1AudioProcessor::getStateInformation(MemoryBlock& destData)
 {
   MemoryOutputStream store(destData, true);
   store.writeInt(0); // version ID
-  store.writeFloat(*parameters.getRawParameterValue("gain"));
-  store.writeFloat(*parameters.getRawParameterValue("bass"));
-  store.writeFloat(*parameters.getRawParameterValue("medium"));
-  store.writeFloat(*parameters.getRawParameterValue("high"));
-  store.writeFloat(*parameters.getRawParameterValue("volume"));
-  store.writeFloat(*parameters.getRawParameterValue("drywet"));
+  store.writeFloat(*parameters.getRawParameterValue("drive"));
+  store.writeFloat(*parameters.getRawParameterValue("tone"));
+  store.writeFloat(*parameters.getRawParameterValue("level"));
 }
 
 void ATKSD1AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
   MemoryInputStream store(data, static_cast<size_t>(sizeInBytes), false);
   int version = store.readInt(); // version ID
-  *parameters.getRawParameterValue("gain") = store.readFloat();
-  *parameters.getRawParameterValue("bass") = store.readFloat();
-  *parameters.getRawParameterValue("medium") = store.readFloat();
-  *parameters.getRawParameterValue("high") = store.readFloat();
-  *parameters.getRawParameterValue("volume") = store.readFloat();
-  *parameters.getRawParameterValue("drywet") = store.readFloat();
+  *parameters.getRawParameterValue("drive") = store.readFloat();
+  *parameters.getRawParameterValue("tone") = store.readFloat();
+  *parameters.getRawParameterValue("level") = store.readFloat();
 }
 
 //==============================================================================
