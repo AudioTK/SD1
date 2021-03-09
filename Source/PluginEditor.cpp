@@ -10,6 +10,7 @@
 
 #include "PluginEditor.h"
 #include "PluginProcessor.h"
+#include "BinaryData.h"
 
 //==============================================================================
 ATKSD1AudioProcessorEditor::ATKSD1AudioProcessorEditor(ATKSD1AudioProcessor& p,
@@ -26,22 +27,17 @@ ATKSD1AudioProcessorEditor::ATKSD1AudioProcessorEditor(ATKSD1AudioProcessor& p,
   addAndMakeVisible(tone);
   addAndMakeVisible(level);
 
+  bckgndImage = juce::ImageFileFormat::loadFrom(BinaryData::Background_png, BinaryData::Background_pngSize);
   // Make sure that before the constructor has finished, you've set the
   // editor's size to whatever you need it to be.
-  setSize(900, 200);
+  setSize(400, 200);
 }
 
-ATKSD1AudioProcessorEditor::~ATKSD1AudioProcessorEditor()
-{
-}
+ATKSD1AudioProcessorEditor::~ATKSD1AudioProcessorEditor() = default;
 
 void ATKSD1AudioProcessorEditor::paint(Graphics& g)
 {
-  // (Our component is opaque, so we must completely fill the background with a solid colour)
-  g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
-  g.setFont(Font("Times New Roman", 30.0f, Font::bold | Font::italic));
-  g.setColour(Colours::whitesmoke);
-  g.drawText("Bass Preamp", 20, 10, 200, 30, Justification::verticallyCentred);
+  g.drawImageAt(bckgndImage, 0, 0);
 }
 
 void ATKSD1AudioProcessorEditor::resized()

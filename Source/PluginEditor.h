@@ -37,4 +37,6 @@ private:
   ATK::juce::SliderComponent drive;
   ATK::juce::SliderComponent tone;
   ATK::juce::SliderComponent level;
+  
+  juce::Image bckgndImage;
 };

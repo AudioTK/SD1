@@ -23,12 +23,15 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="Js7KLE" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="LVbCLE" name="Background.png" compile="0" resource="1" file="resources/Background.png"/>
+    <FILE id="JzJfBG" name="BigKnob.png" compile="0" resource="1" file="resources/BigKnob.png"/>
     <FILE id="L7AlOZ" name="ImageLookAndFeel.cpp" compile="1" resource="0"
           file="ATKJUCEComponents/JUCE/ImageLookAndFeel.cpp"/>
     <FILE id="qC08Rs" name="ImageLookAndFeel.h" compile="0" resource="0"
           file="ATKJUCEComponents/JUCE/ImageLookAndFeel.h"/>
     <FILE id="Vb6RWm" name="Slider.cpp" compile="1" resource="0" file="ATKJUCEComponents/JUCE/Slider.cpp"/>
     <FILE id="XULtU0" name="Slider.h" compile="0" resource="0" file="ATKJUCEComponents/JUCE/Slider.h"/>
+    <FILE id="RIg5TY" name="SmallKnob.png" compile="0" resource="1" file="resources/SmallKnob.png"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" vst3Folder="../../SDKs/VST3_SDK"
