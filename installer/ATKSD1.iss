@@ -1,6 +1,6 @@
 [Setup]
 AppName=ATKSD1
-AppVersion=1.1
+AppVersion=3.0
 
 
 DefaultDirName={pf}\ATKSD1

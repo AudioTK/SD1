@@ -9,8 +9,8 @@
 */
 
 #include "PluginEditor.h"
-#include "PluginProcessor.h"
 #include "BinaryData.h"
+#include "PluginProcessor.h"
 
 //==============================================================================
 ATKSD1AudioProcessorEditor::ATKSD1AudioProcessorEditor(ATKSD1AudioProcessor& p,
