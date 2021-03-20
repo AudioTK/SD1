@@ -5,5 +5,4 @@
 
 */
 
-#include "AppConfig.h"
 #include <atk_distortion/atk_distortion.mm>

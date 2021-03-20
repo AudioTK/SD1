@@ -1,6 +1,6 @@
 #! /bin/sh
 
-#shell script to automate IPlug Project build, code-signing and packaging on OSX
+#shell script to automate Project build, code-signing and packaging on macos
 
 BASEDIR=$(dirname $0)
 cd $BASEDIR
@@ -26,7 +26,6 @@ PLUGIN_NAME=$(echo "${PLUGIN_NAME}" | tr -d '[:space:]')
 # work out the paths to the binaries
 
 PKG="installer/build-mac/$PLUGIN_NAME Installer.pkg"
-PKG_US="installer/build-mac/$PLUGIN_NAME Installer.unsigned.pkg"
 
 echo "making $PLUGIN_NAME version $FULL_VERSION mac distribution..."
 echo ""
@@ -54,8 +53,6 @@ else
  rm build-mac.log
 fi
 
-asciidoctor -r asciidoctor-pdf -b pdf manual/manual.adoc -o manual/${PLUGIN_NAME}_manual.pdf
-
 #---------------------------------------------------------------------------------------------------------
 
 # installer, uses Packages http://s.sudre.free.fr/Software/Packages/about.html
@@ -64,38 +61,7 @@ rm -R -f installer/$PLUGIN_NAME-mac.dmg
 echo "building installer"
 echo ""
 chmod 0777 installer
-packagesbuild installer/ATK$PLUGIN_NAME.pkgproj
-
-#echo "code-sign installer for Gatekeeper on 10.8"
-#echo ""
-#mv "${PKG}" "${PKG_US}"
-#productsign --sign "Developer ID Installer: ""${CERT_ID}" "${PKG_US}" "${PKG}"
-#
-#rm -R -f "${PKG_US}"
-
-#---------------------------------------------------------------------------------------------------------
-
-# dmg, can use dmgcanvas http://www.araelium.com/dmgcanvas/ to make a nice dmg
-
-echo "building dmg"
-echo ""
-
-if [ -d installer/$PLUGIN_NAME.dmgCanvas ]
-then
-  dmgcanvas installer/$PLUGIN_NAME.dmgCanvas installer/$PLUGIN_NAME-mac.dmg
-else
-  hdiutil create installer/ATK$PLUGIN_NAME.dmg -srcfolder installer/build-mac/ -ov -anyowners -volname $PLUGIN_NAME
-  
-  if [ -f installer/ATK$PLUGIN_NAME-mac.dmg ]
-  then
-   rm -f installer/ATK$PLUGIN_NAME-mac.dmg
-  fi
-  
-  hdiutil convert installer/ATK$PLUGIN_NAME.dmg -format UDZO -o installer/ATK$PLUGIN_NAME-mac.dmg
-  rm -R -f installer/ATK$PLUGIN_NAME.dmg
-fi
-
-rm -R -f installer/build-mac/
+packagesbuild installer/$PLUGIN_NAME.pkgproj
 
 #---------------------------------------------------------------------------------------------------------
 
