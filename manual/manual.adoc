@@ -15,7 +15,7 @@ image::ATKSD1.png[GUI]
 Here is how the parameters interact with the plugin:
 
 [square]
-* *Gain* changes the amount of distortion you get from the preamplifier by increasing the input signal level,
+* *Gain* changes the amount of distortion you get from the plugin by increasing the input signal level,
 * *Low* handles the amount of low frequencies in the tone stack
 * *Middle* handles the amount of middle frequencies in the tone stack
 
