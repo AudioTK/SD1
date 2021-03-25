@@ -38,7 +38,7 @@
 #  define JucePlugin_Enable_IAA 0
 #endif
 #ifndef JucePlugin_Name
-#  define JucePlugin_Name "ATKSD1"
+#  define JucePlugin_Name "SD1"
 #endif
 #ifndef JucePlugin_Desc
 #  define JucePlugin_Desc ""
@@ -149,7 +149,7 @@
 #  define JucePlugin_IAASubType JucePlugin_PluginCode
 #endif
 #ifndef JucePlugin_IAAName
-#  define JucePlugin_IAAName "MatthieuBrucher: ATKSD1"
+#  define JucePlugin_IAAName "MatthieuBrucher: SD1"
 #endif
 #ifndef JucePlugin_VSTNumMidiInputs
 #  define JucePlugin_VSTNumMidiInputs 16
