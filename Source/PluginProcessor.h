@@ -18,7 +18,7 @@
 #include <ATK/EQ/ButterworthFilter.h>
 #include <ATK/EQ/ChamberlinFilter.h>
 #include <ATK/EQ/IIRFilter.h>
-#include <ATK/EQ/PedalToneStackFilter.h>
+#include <ATK/Modelling/ModellerFilter.h>
 #include <ATK/Tools/DecimationFilter.h>
 #include <ATK/Tools/OversamplingFilter.h>
 #include <ATK/Tools/VolumeFilter.h>
@@ -74,14 +74,14 @@ private:
   ATK::SD1OverdriveFilter<double> overdriveFilter;
   ATK::IIRFilter<ATK::ButterworthLowPassCoefficients<double>> lowpassFilter;
   ATK::DecimationFilter<double> decimationFilter;
-  ATK::IIRFilter<ATK::SD1ToneCoefficients<double>> toneFilter;
+  std::unique_ptr<ATK::ModellerFilter<double>> toneFilter;
   ATK::ChamberlinFilter<double> highpassFilter;
   ATK::VolumeFilter<double> volumeFilter;
   ATK::OutPointerFilter<float> outFilter;
 
   AudioProcessorValueTreeState parameters;
 
-  float old_drive;
-  float old_tone;
-  float old_level;
+  float old_drive{1000};
+  float old_tone{1000};
+  float old_level{1000};
 };

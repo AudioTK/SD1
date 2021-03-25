@@ -11,6 +11,11 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+namespace SD1
+{
+std::unique_ptr<ATK::ModellerFilter<double>> createStaticFilter();
+} // namespace SD1
+
 //==============================================================================
 ATKSD1AudioProcessor::ATKSD1AudioProcessor()
   :
@@ -34,12 +39,14 @@ ATKSD1AudioProcessor::ATKSD1AudioProcessor()
             std::make_unique<juce::AudioParameterFloat>("tone", "Tone", NormalisableRange<float>(-100, 100), 0, " %"),
             std::make_unique<juce::AudioParameterFloat>("level", "Level", NormalisableRange<float>(0, 100), 100, " %")})
 {
+  toneFilter = SD1::createStaticFilter();
+
   oversamplingFilter.set_input_port(0, &inFilter, 0);
   overdriveFilter.set_input_port(0, &oversamplingFilter, 0);
   lowpassFilter.set_input_port(0, &overdriveFilter, 0);
   decimationFilter.set_input_port(0, &lowpassFilter, 0);
-  toneFilter.set_input_port(0, &decimationFilter, 0);
-  highpassFilter.set_input_port(0, &toneFilter, 0);
+  toneFilter->set_input_port(0, &decimationFilter, 0);
+  highpassFilter.set_input_port(0, toneFilter.get(), toneFilter->find_dynamic_pin("vout"));
   volumeFilter.set_input_port(0, &highpassFilter, 0);
   outFilter.set_input_port(0, &volumeFilter, 0);
 
@@ -48,10 +55,6 @@ ATKSD1AudioProcessor::ATKSD1AudioProcessor()
   highpassFilter.select(2);
   highpassFilter.set_cut_frequency(20);
   highpassFilter.set_attenuation(1);
-
-  old_drive = *parameters.getRawParameterValue("drive");
-  old_tone = *parameters.getRawParameterValue("tone");
-  old_level = *parameters.getRawParameterValue("level");
 }
 
 ATKSD1AudioProcessor::~ATKSD1AudioProcessor()
@@ -126,8 +129,8 @@ void ATKSD1AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
   overdriveFilter.set_output_sampling_rate(intsamplerate * OVERSAMPLING);
   decimationFilter.set_input_sampling_rate(intsamplerate * OVERSAMPLING);
   decimationFilter.set_output_sampling_rate(intsamplerate);
-  toneFilter.set_input_sampling_rate(intsamplerate);
-  toneFilter.set_output_sampling_rate(intsamplerate);
+  toneFilter->set_input_sampling_rate(intsamplerate);
+  toneFilter->set_output_sampling_rate(intsamplerate);
   highpassFilter.set_input_sampling_rate(intsamplerate);
   highpassFilter.set_output_sampling_rate(intsamplerate);
   volumeFilter.set_input_sampling_rate(intsamplerate);
@@ -174,7 +177,7 @@ void ATKSD1AudioProcessor::processBlock(AudioSampleBuffer& buffer, MidiBuffer& m
   if(*parameters.getRawParameterValue("tone") != old_tone)
   {
     old_tone = *parameters.getRawParameterValue("tone");
-    toneFilter.set_tone((old_tone + 100) / 200.);
+    toneFilter->set_parameter(0, (old_tone * .99 + 100) / 200);
   }
   if(*parameters.getRawParameterValue("level") != old_level)
   {

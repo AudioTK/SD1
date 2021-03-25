@@ -1,0 +1,13 @@
+*
+Vin	Vin	0	AC	1V
+*
+R7	Vin	1	10K
+C4	1	0	0.018UF
+PTONE	1	2	3	20k
+
+ZIC	1	3	vout
+C5	2	4	0.027u
+R8	4	0	470
+C6	3	vout	0.01u
+R9	3	vout	10k
+*
