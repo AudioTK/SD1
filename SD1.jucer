@@ -16,6 +16,7 @@
               useAppConfig="0" addUsingNamespaceToJuceHeader="0">
   <MAINGROUP id="H9V4ut" name="SD1">
     <GROUP id="{65FEA80A-F647-1916-F1CE-08CA719AE1BE}" name="Source">
+      <FILE id="Bl2mz5" name="distortion.cpp" compile="1" resource="0" file="Source/distortion.cpp"/>
       <FILE id="gYqifo" name="tone-control.cpp" compile="1" resource="0"
             file="Source/tone-control.cpp"/>
       <FILE id="LX9XxX" name="PluginProcessor.cpp" compile="1" resource="0"

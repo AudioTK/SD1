@@ -17,10 +17,10 @@
 
 namespace
 {
-constexpr gsl::index MAX_ITERATION{1};
-constexpr gsl::index MAX_ITERATION_STEADY_STATE{1};
+constexpr gsl::index MAX_ITERATION = 10;
+constexpr gsl::index MAX_ITERATION_STEADY_STATE{200};
 
-constexpr gsl::index INIT_WARMUP = 1;
+constexpr gsl::index INIT_WARMUP{10};
 constexpr double EPS{1e-8};
 constexpr double MAX_DELTA{1e-1};
 
@@ -31,17 +31,17 @@ class StaticFilter final: public ATK::ModellerFilter<double>
 
   Eigen::Matrix<DataType, 1, 1> static_state{Eigen::Matrix<DataType, 1, 1>::Zero()};
   mutable Eigen::Matrix<DataType, 1, 1> input_state{Eigen::Matrix<DataType, 1, 1>::Zero()};
-  mutable Eigen::Matrix<DataType, 4, 1> dynamic_state{Eigen::Matrix<DataType, 4, 1>::Zero()};
-  ATK::StaticResistorCapacitor<DataType> r8c5{470, 2.7e-08};
-  ATK::StaticResistor<DataType> r9{10000};
-  DataType ptone{22000};
-  DataType ptone_trimmer{0};
-  ATK::StaticCapacitor<DataType> c6{1e-08};
-  ATK::StaticCapacitor<DataType> c4{1.8e-08};
-  ATK::StaticResistor<DataType> r7{10000};
+  mutable Eigen::Matrix<DataType, 3, 1> dynamic_state{Eigen::Matrix<DataType, 3, 1>::Zero()};
+  ATK::StaticDiode<DataType, 1, 1> d1d2{1e-15, 1, 0.026};
+  DataType p1r6{551000};
+  DataType p1r6_trimmer{0};
+  ATK::StaticResistorCapacitor<DataType> r4c3{4700, 4.7e-08};
+  ATK::StaticCapacitor<DataType> c4{5.1e-11};
+  ATK::StaticResistor<DataType> r5{10000};
+  ATK::StaticCapacitor<DataType> c2{1e-06};
 
 public:
-  StaticFilter(): ModellerFilter<DataType>(4, 1)
+  StaticFilter(): ModellerFilter<DataType>(3, 1)
   {
     static_state << 0.000000;
   }
@@ -50,7 +50,7 @@ public:
 
   gsl::index get_nb_dynamic_pins() const override
   {
-    return 4;
+    return 3;
   }
 
   gsl::index get_nb_input_pins() const override
@@ -77,12 +77,10 @@ public:
   {
     switch(identifier)
     {
-    case 3:
-      return "1";
     case 2:
-      return "vout";
+      return "1";
     case 1:
-      return "3";
+      return "vout";
     case 0:
       return "2";
     default:
@@ -123,7 +121,7 @@ public:
     {
     case 0:
     {
-      return "ptone";
+      return "p1r6";
     }
     default:
       throw ATK::RuntimeError("No such pin");
@@ -136,7 +134,7 @@ public:
     {
     case 0:
     {
-      return ptone_trimmer;
+      return p1r6_trimmer;
     }
     default:
       throw ATK::RuntimeError("No such pin");
@@ -149,7 +147,7 @@ public:
     {
     case 0:
     {
-      ptone_trimmer = value;
+      p1r6_trimmer = value;
       break;
     }
     default:
@@ -185,16 +183,16 @@ public:
   void init()
   {
     // update_steady_state
-    r8c5.update_steady_state(1. / input_sampling_rate, dynamic_state[0], static_state[0]);
-    c6.update_steady_state(1. / input_sampling_rate, dynamic_state[1], dynamic_state[2]);
-    c4.update_steady_state(1. / input_sampling_rate, dynamic_state[3], static_state[0]);
+    r4c3.update_steady_state(1. / input_sampling_rate, dynamic_state[0], static_state[0]);
+    c4.update_steady_state(1. / input_sampling_rate, dynamic_state[0], dynamic_state[1]);
+    c2.update_steady_state(1. / input_sampling_rate, input_state[0], dynamic_state[2]);
 
     solve<true>();
 
     // update_steady_state
-    r8c5.update_steady_state(1. / input_sampling_rate, dynamic_state[0], static_state[0]);
-    c6.update_steady_state(1. / input_sampling_rate, dynamic_state[1], dynamic_state[2]);
-    c4.update_steady_state(1. / input_sampling_rate, dynamic_state[3], static_state[0]);
+    r4c3.update_steady_state(1. / input_sampling_rate, dynamic_state[0], static_state[0]);
+    c4.update_steady_state(1. / input_sampling_rate, dynamic_state[0], dynamic_state[1]);
+    c2.update_steady_state(1. / input_sampling_rate, input_state[0], dynamic_state[2]);
 
     initialized = true;
   }
@@ -211,9 +209,9 @@ public:
       solve<false>();
 
       // Update state
-      r8c5.update_state(dynamic_state[0], static_state[0]);
-      c6.update_state(dynamic_state[1], dynamic_state[2]);
-      c4.update_state(dynamic_state[3], static_state[0]);
+      r4c3.update_state(dynamic_state[0], static_state[0]);
+      c4.update_state(dynamic_state[0], dynamic_state[1]);
+      c2.update_state(input_state[0], dynamic_state[2]);
       for(gsl::index j = 0; j < nb_output_ports; ++j)
       {
         outputs[j][i] = dynamic_state[j];
@@ -248,20 +246,16 @@ public:
     auto d0_ = dynamic_state[0];
     auto d1_ = dynamic_state[1];
     auto d2_ = dynamic_state[2];
-    auto d3_ = dynamic_state[3];
 
     // Precomputes
+    d1d2.precompute(dynamic_state[0], dynamic_state[1]);
 
-    Eigen::Matrix<DataType, 4, 1> eqs(Eigen::Matrix<DataType, 4, 1>::Zero());
-    auto eq0 = +(steady_state ? 0 : r8c5.get_current(d0_, s0_))
-             + (ptone_trimmer != 0 ? (d3_ - d0_) / (ptone_trimmer * ptone) : 0)
-             + (ptone_trimmer != 1 ? (d1_ - d0_) / ((1 - ptone_trimmer) * ptone) : 0);
-    auto eq1 = +r9.get_current(d1_, d2_) + (ptone_trimmer != 1 ? (d0_ - d1_) / ((1 - ptone_trimmer) * ptone) : 0)
-             + (steady_state ? 0 : c6.get_current(d1_, d2_));
-    auto eq2 = dynamic_state[1] - dynamic_state[3];
-    auto eq3 = +(ptone_trimmer != 0 ? (d0_ - d3_) / (ptone_trimmer * ptone) : 0)
-             + (steady_state ? 0 : c4.get_current(d3_, s0_)) - r7.get_current(i0_, d3_);
-    eqs << eq0, eq1, eq2, eq3;
+    Eigen::Matrix<DataType, 3, 1> eqs(Eigen::Matrix<DataType, 3, 1>::Zero());
+    auto eq0 = +d1d2.get_current() + (p1r6_trimmer != 0 ? (d1_ - d0_) / (p1r6_trimmer * p1r6) : 0)
+             + (steady_state ? 0 : r4c3.get_current(d0_, s0_)) + (steady_state ? 0 : c4.get_current(d0_, d1_));
+    auto eq1 = dynamic_state[2] - dynamic_state[0];
+    auto eq2 = +r5.get_current(d2_, s0_) - (steady_state ? 0 : c2.get_current(i0_, d2_));
+    eqs << eq0, eq1, eq2;
 
     // Check if the equations have converged
     if((eqs.array().abs() < EPS).all())
@@ -269,60 +263,47 @@ public:
       return true;
     }
 
-    auto jac0_0 = 0 - (steady_state ? 0 : r8c5.get_gradient()) + (ptone_trimmer != 0 ? -1 / (ptone_trimmer * ptone) : 0)
-                + (ptone_trimmer != 1 ? -1 / ((1 - ptone_trimmer) * ptone) : 0);
-    auto jac0_1 = 0 + (ptone_trimmer != 1 ? 1 / ((1 - ptone_trimmer) * ptone) : 0);
+    auto jac0_0 = 0 - d1d2.get_gradient() + (p1r6_trimmer != 0 ? -1 / (p1r6_trimmer * p1r6) : 0)
+                - (steady_state ? 0 : r4c3.get_gradient()) - (steady_state ? 0 : c4.get_gradient());
+    auto jac0_1 = 0 + d1d2.get_gradient() + (p1r6_trimmer != 0 ? 1 / (p1r6_trimmer * p1r6) : 0)
+                + (steady_state ? 0 : c4.get_gradient());
     auto jac0_2 = 0;
-    auto jac0_3 = 0 + (ptone_trimmer != 0 ? 1 / (ptone_trimmer * ptone) : 0);
-    auto jac1_0 = 0 + (ptone_trimmer != 1 ? 1 / ((1 - ptone_trimmer) * ptone) : 0);
-    auto jac1_1 = 0 - r9.get_gradient() + (ptone_trimmer != 1 ? -1 / ((1 - ptone_trimmer) * ptone) : 0)
-                - (steady_state ? 0 : c6.get_gradient());
-    auto jac1_2 = 0 + r9.get_gradient() + (steady_state ? 0 : c6.get_gradient());
-    auto jac1_3 = 0;
+    auto jac1_0 = 0 + -1;
+    auto jac1_1 = 0;
+    auto jac1_2 = 0 + 1;
     auto jac2_0 = 0;
-    auto jac2_1 = 0 + 1;
-    auto jac2_2 = 0;
-    auto jac2_3 = 0 + -1;
-    auto jac3_0 = 0 + (ptone_trimmer != 0 ? 1 / (ptone_trimmer * ptone) : 0);
-    auto jac3_1 = 0;
-    auto jac3_2 = 0;
-    auto jac3_3 = 0 + (ptone_trimmer != 0 ? -1 / (ptone_trimmer * ptone) : 0) - (steady_state ? 0 : c4.get_gradient())
-                - r7.get_gradient();
-    auto det
-        = (1 * jac0_0 * (-1 * jac1_2 * (1 * jac2_1 * jac3_3)) + -1 * jac0_1 * (-1 * jac1_2 * (-1 * jac2_3 * jac3_0))
-            + -1 * jac0_3 * (1 * jac1_2 * (-1 * jac2_1 * jac3_0)));
+    auto jac2_1 = 0;
+    auto jac2_2 = 0 - r5.get_gradient() - (steady_state ? 0 : c2.get_gradient());
+    auto det = (-1 * jac0_1 * (1 * jac1_0 * jac2_2));
     auto invdet = 1 / det;
-    auto com0_0 = (-1 * jac1_2 * (1 * jac2_1 * jac3_3));
-    auto com1_0 = -1 * (-1 * jac1_2 * (-1 * jac2_3 * jac3_0));
-    auto com2_0 = (1 * jac1_0 * (1 * jac2_1 * jac3_3) + -1 * jac1_1 * (-1 * jac2_3 * jac3_0));
-    auto com3_0 = -1 * (1 * jac1_2 * (-1 * jac2_1 * jac3_0));
-    auto com0_1 = -1 * 0;
-    auto com1_1 = 0;
-    auto com2_1 = -1
-                * (1 * jac0_0 * (1 * jac2_1 * jac3_3) + -1 * jac0_1 * (-1 * jac2_3 * jac3_0)
-                    + 1 * jac0_3 * (-1 * jac2_1 * jac3_0));
-    auto com3_1 = 0;
-    auto com0_2 = (1 * jac0_1 * (1 * jac1_2 * jac3_3));
-    auto com1_2 = -1 * (1 * jac0_0 * (1 * jac1_2 * jac3_3) + 1 * jac0_3 * (-1 * jac1_2 * jac3_0));
-    auto com2_2 = (1 * jac0_0 * (1 * jac1_1 * jac3_3) + -1 * jac0_1 * (1 * jac1_0 * jac3_3)
-                   + 1 * jac0_3 * (-1 * jac1_1 * jac3_0));
-    auto com3_2 = -1 * (-1 * jac0_1 * (-1 * jac1_2 * jac3_0));
-    auto com0_3 = -1 * (1 * jac0_1 * (1 * jac1_2 * jac2_3) + 1 * jac0_3 * (-1 * jac1_2 * jac2_1));
-    auto com1_3 = (1 * jac0_0 * (1 * jac1_2 * jac2_3));
-    auto com2_3 = -1
-                * (1 * jac0_0 * (1 * jac1_1 * jac2_3) + -1 * jac0_1 * (1 * jac1_0 * jac2_3)
-                    + 1 * jac0_3 * (1 * jac1_0 * jac2_1));
-    auto com3_3 = (1 * jac0_0 * (-1 * jac1_2 * jac2_1));
-    Eigen::Matrix<DataType, 4, 4> cojacobian(Eigen::Matrix<DataType, 4, 4>::Zero());
+    auto com0_0 = 0;
+    auto com1_0 = -1 * (1 * jac1_0 * jac2_2);
+    auto com2_0 = 0;
+    auto com0_1 = -1 * (1 * jac0_1 * jac2_2);
+    auto com1_1 = (1 * jac0_0 * jac2_2);
+    auto com2_1 = -1 * 0;
+    auto com0_2 = (1 * jac0_1 * jac1_2);
+    auto com1_2 = -1 * (1 * jac0_0 * jac1_2);
+    auto com2_2 = (-1 * jac0_1 * jac1_0);
+    Eigen::Matrix<DataType, 3, 3> cojacobian(Eigen::Matrix<DataType, 3, 3>::Zero());
 
-    cojacobian << com0_0, com0_1, com0_2, com0_3, com1_0, com1_1, com1_2, com1_3, com2_0, com2_1, com2_2, com2_3,
-        com3_0, com3_1, com3_2, com3_3;
-    Eigen::Matrix<DataType, 4, 1> delta = cojacobian * eqs * invdet;
+    cojacobian << com0_0, com0_1, com0_2, com1_0, com1_1, com1_2, com2_0, com2_1, com2_2;
+    Eigen::Matrix<DataType, 3, 1> delta = cojacobian * eqs * invdet;
 
     // Check if the update is big enough
     if(delta.hasNaN() || (delta.array().abs() < EPS).all())
     {
       return true;
+    }
+
+    // Big variations are only in steady state mode
+    if constexpr(steady_state)
+    {
+      auto max_delta = delta.array().abs().maxCoeff();
+      if(max_delta > MAX_DELTA)
+      {
+        delta *= MAX_DELTA / max_delta;
+      }
     }
 
     dynamic_state -= delta;
