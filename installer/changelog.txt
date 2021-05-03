@@ -1,7 +1,7 @@
 SD1 changelog
 http://www.audio-tk.com
 
-09/03/21 - 3.0
+03/05/21 - 3.0
   - built against ATK 3.3.0
   - rebuild against JUCE 6
 03/03/17 - v2.0.1 bug fix release
