@@ -70,7 +70,6 @@
         <MODULEPATH id="atk_utility" path="../../AudioTK/modules/JUCE"/>
         <MODULEPATH id="atk_eq" path="../../AudioTK/modules/JUCE"/>
         <MODULEPATH id="atk_tools" path="../../AudioTK/modules/JUCE"/>
-        <MODULEPATH id="atk_distortion" path="../../AudioTK/modules/JUCE"/>
         <MODULEPATH id="atk_modelling" path="../../AudioTK-Modeling/modules/JUCE"/>
       </MODULEPATHS>
     </XCODE_MAC>
@@ -101,8 +100,7 @@
         <MODULEPATH id="atk_utility" path="../AudioTK/modules/JUCE"/>
         <MODULEPATH id="atk_eq" path="../AudioTK/modules/JUCE"/>
         <MODULEPATH id="atk_tools" path="../AudioTK/modules/JUCE"/>
-        <MODULEPATH id="atk_distortion" path="../AudioTK/modules/JUCE"/>
-        <MODULEPATH id="atk_modelling" path="../../AudioTK-Modeling/modules/JUCE"/>
+        <MODULEPATH id="atk_modelling" path="..\ATK-modelling\modules\JUCE"/>
       </MODULEPATHS>
     </VS2019>
     <VS2019 targetFolder="Builds/VisualStudio2019_32">
@@ -132,14 +130,12 @@
         <MODULEPATH id="atk_utility" path="../AudioTK/modules/JUCE"/>
         <MODULEPATH id="atk_eq" path="../AudioTK/modules/JUCE"/>
         <MODULEPATH id="atk_tools" path="../AudioTK/modules/JUCE"/>
-        <MODULEPATH id="atk_distortion" path="../AudioTK/modules/JUCE"/>
-        <MODULEPATH id="atk_modelling" path="../../AudioTK-Modeling/modules/JUCE"/>
+        <MODULEPATH id="atk_modelling" path="..\ATK-modelling\modules\JUCE"/>
       </MODULEPATHS>
     </VS2019>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="atk_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="atk_distortion" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="atk_eq" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="atk_modelling" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="atk_tools" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
