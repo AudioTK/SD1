@@ -49,7 +49,7 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
-															<string>/Users/matthieu/Library/Audio/Plug-Ins/VST3/SD1.vst3</string>
+															<string>/Users/matthieu/Library/Audio/Plug-Ins/VST3/ATKSD1.vst3</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
 															<key>PERMISSIONS</key>
@@ -223,7 +223,7 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
-															<string>../Builds/MacOSX/build/Release/SD1.appex</string>
+															<string>../Builds/MacOSX/build/Release/ATKSD1.appex</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
 															<key>PERMISSIONS</key>
@@ -384,7 +384,7 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>../Builds/MacOSX/build/Release/SD1.app</string>
+									<string>../Builds/MacOSX/build/Release/ATKSD1.app</string>
 									<key>PATH_TYPE</key>
 									<integer>1</integer>
 									<key>PERMISSIONS</key>
